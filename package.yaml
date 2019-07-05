@@ -24,11 +24,22 @@ dependencies:
 
 library:
   source-dirs: src
-  default-extenstions:
+  default-extensions:
+    - NoImplicitPrelude
     - OverloadedStrings
+    - RecordWildCards
   dependencies:
+    - text
+    - aeson
+    - network
     - protolude
     - servant
+    - servant-server
+    - HaskellNet
+    - bytestring
+    - HaskellNet-SSL
+    - mime-mail
+    - warp
 
 executables:
   pms-exe:
