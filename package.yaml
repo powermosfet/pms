@@ -42,7 +42,7 @@ library:
     - warp
 
 executables:
-  pms-exe:
+  pms:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
