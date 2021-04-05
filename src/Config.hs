@@ -11,19 +11,16 @@ import Protolude (Char, Either(..), Int, Show, (<$>), (<*>), (<>), (>>=), maybeT
 data Config =
     Config
         { port :: Int
-        , smtpHost :: HostName
-        , smtpUser :: UserName
-        , smtpPassword :: Password
-        , smtpPort :: PortNumber
-        , mailSender :: [Char]
-        , mailRecipient :: [Char]
+        , signalUrl :: [Char]
+        , signalSender :: [Char]
+        , signalRecipient :: [Char]
         }
     deriving (Show)
 
 fromEnvironment :: [([Char], [Char])] -> Either [Char] Config
 fromEnvironment env =
     let find key = maybeToEither ("Could not find env. var. " <> key) (lookup key env)
-     in Config <$> (find "APP_PORT" >>= readEither) <*> find "SMTP_HOST" <*> (find "SMTP_USER") <*> (find "SMTP_PW") <*>
-        (find "SMTP_PORT" >>= (readEither)) <*>
-        (find "MAIL_SENDER") <*>
-        (find "MAIL_RECIPIENT")
+     in Config <$> (find "APP_PORT" >>= readEither) <*>
+        (find "SIGNAL_URL") <*>
+        (find "SIGNAL_SENDER") <*>
+        (find "SIGNAL_RECIPIENT")

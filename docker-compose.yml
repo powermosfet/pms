@@ -1,0 +1,19 @@
+version: "3"
+
+volumes:
+  signal-cli-config:
+
+services:
+  signal-cli-rest-api:
+    image: bbernhard/signal-cli-rest-api:latest
+	environment:
+	  - USE_NATIVE=0
+    volumes:
+      - "signal-cli-config:/home/.local/share/signal-cli" #map "signal-cli-config" folder on host
+
+  pms:
+    build: .
+    environment:
+      - SIGNAL_URL="http://signal-cli-rest-api:8080"
+    ports:
+      - "8001:8081"

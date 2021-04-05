@@ -38,8 +38,8 @@ library:
     - HaskellNet
     - bytestring
     - HaskellNet-SSL
-    - mime-mail
     - warp
+    - HTTP
 
 executables:
   pms:

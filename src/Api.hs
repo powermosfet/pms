@@ -9,7 +9,7 @@ module Api
 
 import Config (Config(..))
 import Data.Aeson (ToJSON, (.=), object, toJSON)
-import Mail (mailer)
+import Signal (sendSignalMsg)
 import Memo (Memo(..))
 import Protolude (Eq, Show, Text, ($), liftIO, return)
 import Servant ((:>), JSON, Post, Proxy(..), ReqBody)
@@ -31,7 +31,7 @@ server = postMemo
 
 postMemo :: Config -> Memo -> Handler MemoResult
 postMemo config memo = do
-    liftIO $ mailer config memo
+    liftIO $ sendSignalMsg config memo
     return Success
 
 api :: Proxy PmsApi
