@@ -8,7 +8,7 @@ import Memo (Memo(..))
 import Data.Aeson (ToJSON, encode)
 import qualified Data.Text.Lazy as L
 import GHC.Generics (Generic)
-import Protolude (Char, Show, IO, (++), Either)
+import Protolude (Char, Show, IO, (++), Either, print)
 import Config (Config(..))
 import Network.Stream
 import Data.ByteString.Lazy (ByteString)
@@ -34,6 +34,7 @@ signalMessage (Config {..}) (Memo {..}) =
 sendSignalMsg :: Config -> Memo -> IO (Either ConnError (Response ByteString))
 sendSignalMsg config memo = do
     let r = getRequest (signalUrl config ++ "/v2/send")
+    print (encode (signalMessage config memo))
     simpleHTTP (r { rqMethod = POST
                   , rqBody = encode (signalMessage config memo)
                   })
