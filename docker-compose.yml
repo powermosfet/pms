@@ -15,7 +15,7 @@ services:
     image: pms:latest
     environment:
       - APP_PORT=${APP_PORT}
-      - SIGNAL_URL="http://signal-cli-rest-api:8080"
+      - SIGNAL_URL=http://signal-cli-rest-api:8080
       - SIGNAL_SENDER=${SIGNAL_SENDER}
       - SIGNAL_RECIPIENT=${SIGNAL_RECIPIENT}
     ports:
