@@ -14,6 +14,9 @@ services:
   pms:
     build: .
     environment:
+      - APP_PORT=${APP_PORT}
       - SIGNAL_URL="http://signal-cli-rest-api:8080"
+      - SIGNAL_SENDER=${SIGNAL_SENDER}
+      - SIGNAL_RECIPIENT=${SIGNAL_RECIPIENT}
     ports:
-      - "8001:8081"
+      - "8001:${APP_PORT}"
