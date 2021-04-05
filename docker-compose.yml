@@ -6,8 +6,8 @@ volumes:
 services:
   signal-cli-rest-api:
     image: bbernhard/signal-cli-rest-api:latest
-	environment:
-	  - USE_NATIVE=0
+    environment:
+      - USE_NATIVE=0
     volumes:
       - "signal-cli-config:/home/.local/share/signal-cli" #map "signal-cli-config" folder on host
 
