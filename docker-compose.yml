@@ -12,7 +12,7 @@ services:
       - "signal-cli-config:/home/.local/share/signal-cli" #map "signal-cli-config" folder on host
 
   pms:
-    build: .
+    image: pms:latest
     environment:
       - APP_PORT=${APP_PORT}
       - SIGNAL_URL="http://signal-cli-rest-api:8080"
