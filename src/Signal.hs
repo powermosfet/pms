@@ -34,7 +34,9 @@ signalMessage (Config {..}) (Memo {..}) =
 
 sendSignalMsg :: Config -> Memo -> IO (Either ConnError (Response [Char]))
 sendSignalMsg config memo = do
-    let r = postRequestWithBody (signalUrl config ++ "/v2/send") "application/json" (BS.unpack (encode (signalMessage config memo)))
+    let json = BS.unpack (encode (signalMessage config memo))
+    let r = postRequestWithBody (signalUrl config ++ "/v2/send") "application/json" json
+    print json
     print r
     simpleHTTP r
 
