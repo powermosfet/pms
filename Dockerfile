@@ -1,10 +1,11 @@
-FROM alpine:latest
+FROM archlinux/archlinux:latest
 ARG BINARY_PATH
-RUN apk add ca-certificates
+RUN pacman -Syu --noconfirm && pacman -S --noconfirm \
+  ca-certificates \
+  ghc-libs
 
 RUN mkdir -p /opt/pms/
 WORKDIR /opt/pms
 COPY "$BINARY_PATH" /opt/pms
-RUN chmod a+x /opt/pms/pms
 
-CMD ["/opt/pms/pms"]
+ENTRYPOINT ["/opt/pms/pms"]
