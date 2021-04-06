@@ -5,14 +5,14 @@ module Signal where
 
 import Protolude 
 
-import Network.HTTP (Response, Request(..), getRequest, simpleHTTP, RequestMethod(POST))
-import Memo (Memo(..))
-import Data.Aeson (ToJSON, encode)
-import qualified Data.Text.Lazy as L
-import GHC.Generics (Generic)
 import Config (Config(..))
+import Data.Aeson (ToJSON, encode)
+import GHC.Generics (Generic)
+import Memo (Memo(..))
+import Network.HTTP (Response, Request(..), postRequestWithBody, simpleHTTP)
 import Network.Stream
-import qualified Data.ByteString.Lazy as BL
+import qualified Data.ByteString.Lazy.Char8 as BS
+import qualified Data.Text.Lazy as L
 
 data SignalMessage =
     SignalMessage
@@ -32,11 +32,9 @@ signalMessage (Config {..}) (Memo {..}) =
                   }
     
 
-sendSignalMsg :: Config -> Memo -> IO (Either ConnError (Response BL.ByteString))
+sendSignalMsg :: Config -> Memo -> IO (Either ConnError (Response [Char]))
 sendSignalMsg config memo = do
-    let r = getRequest (signalUrl config ++ "/v2/send")
-    putStrLn (encode (signalMessage config memo) :: BL.ByteString)
-    simpleHTTP (r { rqMethod = POST
-                  , rqBody = encode (signalMessage config memo)
-                  })
+    let r = postRequestWithBody (signalUrl config ++ "/v2/send") "application/json" (BS.unpack (encode (signalMessage config memo)))
+    print r
+    simpleHTTP r
 
