@@ -11,7 +11,7 @@ import GHC.Generics (Generic)
 import Memo (Memo(..))
 import Network.HTTP (Response, Request(..), postRequestWithBody, simpleHTTP)
 import Network.Stream
-import qualified Data.ByteString.Lazy.Char8 as BS
+import qualified Data.ByteString.Lazy.UTF8 as BS
 import qualified Data.Text.Lazy as L
 
 data SignalMessage =
@@ -34,7 +34,7 @@ signalMessage (Config {..}) (Memo {..}) =
 
 sendSignalMsg :: Config -> Memo -> IO (Either ConnError (Response [Char]))
 sendSignalMsg config memo = do
-    let json = BS.unpack (encode (signalMessage config memo))
+    let json = BS.toString (encode (signalMessage config memo))
     let r = postRequestWithBody (signalUrl config ++ "/v2/send") "application/json" json
     print json
     print r

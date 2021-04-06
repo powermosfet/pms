@@ -29,17 +29,18 @@ library:
     - OverloadedStrings
     - RecordWildCards
   dependencies:
-    - text
+    - HTTP
+    - HaskellNet
+    - HaskellNet-SSL
     - aeson
+    - bytestring
     - network
     - protolude
     - servant
     - servant-server
-    - HaskellNet
-    - bytestring
-    - HaskellNet-SSL
+    - text
+    - utf8-string
     - warp
-    - HTTP
 
 executables:
   pms:
