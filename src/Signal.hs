@@ -35,7 +35,7 @@ signalMessage (Config {..}) (Memo {..}) =
 sendSignalMsg :: Config -> Memo -> IO (Either ConnError (Response BS.ByteString))
 sendSignalMsg config memo = do
     let r = (postRequest (T.unpack (signalUrl config) ++ "/v2/send")) { rqBody = encode (signalMessage config memo) }
-    let newHeaders = (Header HdrContentType "application/json") : rqHeaders r
+    let newHeaders = rqHeaders r <> [Header HdrContentType "application/json"] 
     BS.putStrLn (encode (signalMessage config memo))
     print r
     simpleHTTP (r { rqHeaders = newHeaders })
