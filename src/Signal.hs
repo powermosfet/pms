@@ -12,7 +12,7 @@ import Memo (Memo(..))
 import Network.HTTP (Response, Request(..), postRequest, simpleHTTP)
 import Network.Stream
 import qualified Data.Text as T
-import qualified Data.ByteString.Lazy.Internal as BS
+import qualified Data.ByteString.Lazy as BS
 
 data SignalMessage =
     SignalMessage
@@ -35,6 +35,7 @@ signalMessage (Config {..}) (Memo {..}) =
 sendSignalMsg :: Config -> Memo -> IO (Either ConnError (Response BS.ByteString))
 sendSignalMsg config memo = do
     let r = (postRequest (T.unpack (signalUrl config) ++ "/v2/send")) { rqBody = encode (signalMessage config memo) }
+    BS.putStrLn (encode (signalMessage config memo))
     print r
     simpleHTTP r
 
