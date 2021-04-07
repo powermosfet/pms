@@ -29,17 +29,14 @@ library:
     - OverloadedStrings
     - RecordWildCards
   dependencies:
-    - HTTP
-    - HaskellNet
-    - HaskellNet-SSL
     - aeson
     - bytestring
+    - http-conduit
     - network
     - protolude
     - servant
     - servant-server
     - text
-    - utf8-string
     - warp
 
 executables:

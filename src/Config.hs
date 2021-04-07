@@ -6,8 +6,6 @@ module Config
 import Protolude 
 
 import Data.List (lookup)
-import Network.HaskellNet.Auth (Password, UserName)
-import Network.Socket (HostName, PortNumber)
 import qualified Data.Text as T
 
 data Config =

@@ -9,8 +9,7 @@ import Config (Config(..))
 import Data.Aeson (ToJSON, encode)
 import GHC.Generics (Generic)
 import Memo (Memo(..))
-import Network.HTTP (Response, Request(..), postRequest, simpleHTTP, Header(..), HeaderName(HdrContentType))
-import Network.Stream
+import Network.HTTP.Simple
 import qualified Data.Text as T
 import qualified Data.ByteString.Lazy as BS
 
@@ -32,11 +31,11 @@ signalMessage (Config {..}) (Memo {..}) =
                   }
     
 
-sendSignalMsg :: Config -> Memo -> IO (Either ConnError (Response BS.ByteString))
+sendSignalMsg :: Config -> Memo -> IO (Response ())
 sendSignalMsg config memo = do
-    let r = (postRequest (T.unpack (signalUrl config) ++ "/v2/send")) { rqBody = encode (signalMessage config memo) }
-    let newHeaders = rqHeaders r <> [Header HdrContentType "application/json"] 
-    BS.putStrLn (encode (signalMessage config memo))
-    print r
-    simpleHTTP (r { rqHeaders = newHeaders })
+    T.unpack (signalUrl config) ++ "/v2/send"
+      & parseRequest_ 
+      & setRequestMethod "POST"
+      & setRequestBodyJSON (signalMessage config memo)
+      & httpNoBody 
 
