@@ -12,12 +12,11 @@ import Memo (Memo(..))
 import Network.HTTP (Response, Request(..), postRequestWithBody, simpleHTTP)
 import Network.Stream
 import qualified Data.ByteString.Lazy.UTF8 as BS
-import qualified Data.Text.Lazy as L
 
 data SignalMessage =
     SignalMessage
         { base64_attachments :: [[Char]]
-        , message :: L.Text
+        , message :: [Char]
         , number :: [Char]
         , recipients :: [[Char]]
         }
