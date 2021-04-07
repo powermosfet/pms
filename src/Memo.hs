@@ -7,11 +7,11 @@ module Memo
 
 import Data.Aeson (FromJSON)
 import GHC.Generics (Generic)
-import Protolude (Char, Show)
+import Protolude (Char, Show, Text)
 
 data Memo =
     Memo
-        { subject :: [Char]
-        , content :: [Char]
+        { subject :: Text
+        , content :: Text
         }
     deriving (Generic, Show, FromJSON)
