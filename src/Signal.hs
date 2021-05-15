@@ -31,11 +31,10 @@ signalMessage (Config {..}) (Memo {..}) =
                   }
     
 
-sendSignalMsg :: Config -> Memo -> IO (Response ())
+sendSignalMsg :: Config -> Memo -> IO ()
 sendSignalMsg config memo = do
-    T.unpack (signalUrl config) ++ "/v2/send"
-      & parseRequest_ 
-      & setRequestMethod "POST"
-      & setRequestBodyJSON (signalMessage config memo)
-      & httpNoBody 
+    BS.putStrLn (encode (signalMessage config memo))
+    let req = setRequestBodyJSON (signalMessage config memo) $ setRequestMethod "POST" $ parseRequest_ $ T.unpack (signalUrl config) ++ "/v2/send" 
 
+    response <- httpLBS req
+    print response
