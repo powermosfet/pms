@@ -33,7 +33,6 @@ library:
     - bytestring
     - http-conduit
     - http-client
-    - network
     - protolude
     - servant
     - servant-server
