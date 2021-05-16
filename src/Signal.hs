@@ -10,8 +10,9 @@ import Data.Aeson (ToJSON, encode)
 import GHC.Generics (Generic)
 import Memo (Memo(..))
 import Network.HTTP.Simple
-import qualified Data.Text as T
 import qualified Data.ByteString.Lazy as BS
+import qualified Data.ByteString.Lazy.Char8 as BSC
+import qualified Data.Text as T
 
 data SignalMessage =
     SignalMessage
@@ -33,8 +34,10 @@ signalMessage (Config {..}) (Memo {..}) =
 
 sendSignalMsg :: Config -> Memo -> IO ()
 sendSignalMsg config memo = do
-    BS.putStrLn (encode (signalMessage config memo))
-    let req = setRequestBodyJSON (signalMessage config memo) $ setRequestMethod "POST" $ parseRequest_ $ T.unpack (signalUrl config) ++ "/v2/send" 
+    BSC.putStrLn (encode (signalMessage config memo))
+    let req = T.unpack (signalUrl config) ++ "/v2/send" &
+              parseRequest_ &
+              setRequestMethod "POST" &
+              setRequestBodyJSON (signalMessage config memo)
 
-    response <- httpLBS req
-    print response
+    httpLBS req >>= print
