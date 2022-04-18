@@ -15,6 +15,7 @@ data Config =
         , signalSender :: Text
         , signalRecipient :: Text
         , signalLogRecipient :: Text
+        , signalConfigPath :: Text
         }
     deriving (Show)
 
@@ -25,4 +26,5 @@ fromEnvironment env =
         (T.pack <$> find "SIGNAL_CLI") <*>
         (T.pack <$> find "SIGNAL_SENDER") <*>
         (T.pack <$> find "SIGNAL_RECIPIENT") <*>
-        (T.pack <$> find "SIGNAL_LOG_RECIPIENT")
+        (T.pack <$> find "SIGNAL_LOG_RECIPIENT") <*>
+        (T.pack <$> find "SIGNAL_CONFIG_PATH")
