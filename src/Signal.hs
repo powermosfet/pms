@@ -34,7 +34,8 @@ signalMessage (Config {..}) (Memo {..}) =
 
 sendSignalMsg :: Config -> Memo -> IO ()
 sendSignalMsg config memo = do
+    let cli = T.unpack $ Config.signalCli config
     let sender = show $ T.unpack $ Config.signalSender config
     let content = show $ T.unpack $ Memo.content memo
     let recipient = show $ T.unpack $ Config.signalRecipient config
-    Cmd.command_ [] "signal-cli" [ "-a", sender, "send", "-m", content, recipient ]
+    Cmd.command_ [] cli [ "-a", sender, "send", "-m", content, recipient ]
