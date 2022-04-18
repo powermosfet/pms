@@ -11,8 +11,8 @@ import GHC.Generics (Generic)
 import Memo (Memo(..))
 import Network.HTTP.Simple
 import qualified Data.ByteString.Lazy as BS
-import qualified Data.ByteString.Lazy.Char8 as BSC
 import qualified Data.Text as T
+import qualified System.Command as Cmd
 
 data SignalMessage =
     SignalMessage
@@ -34,10 +34,7 @@ signalMessage (Config {..}) (Memo {..}) =
 
 sendSignalMsg :: Config -> Memo -> IO ()
 sendSignalMsg config memo = do
-    BSC.putStrLn (encode (signalMessage config memo))
-    let req = T.unpack (signalUrl config) ++ "/v2/send" &
-              parseRequest_ &
-              setRequestMethod "POST" &
-              setRequestBodyJSON (signalMessage config memo)
-
-    httpLBS req >>= print
+    let sender = T.unpack $ Config.signalSender config
+    let content = T.unpack $ Memo.content memo
+    let recipient = T.unpack $ Config.signalRecipient config
+    Cmd.command_ [] "signal-cli" [ "-a", sender, "send", "-m", content, recipient ]

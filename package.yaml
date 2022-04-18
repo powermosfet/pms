@@ -2,9 +2,9 @@ name:                pms
 version:             0.1.0.0
 github:              "githubuser/pms"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2019 Author name here"
+author:              "Asmund Berge"
+maintainer:          "asmund@berge.id"
+copyright:           "2019 Asmund Berge"
 
 extra-source-files:
 - README.md
@@ -38,6 +38,7 @@ library:
     - servant-server
     - text
     - warp
+    - command
 
 executables:
   pms:

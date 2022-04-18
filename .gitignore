@@ -2,3 +2,5 @@
 pms.cabal
 *~
 /env/
+/dist-newstyle/
+/result
