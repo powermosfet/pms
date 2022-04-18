@@ -12,7 +12,7 @@ import Memo (Memo(..))
 import Network.HTTP.Simple
 import qualified Data.ByteString.Lazy as BS
 import qualified Data.Text as T
-import qualified System.Command as Cmd
+import qualified System.Cmd as Cmd
 
 data SignalMessage =
     SignalMessage
@@ -39,4 +39,6 @@ sendSignalMsg config memo = do
     let content = show $ T.unpack $ Memo.content memo
     let recipient = show $ T.unpack $ Config.signalRecipient config
     let configPath = T.unpack $ Config.signalConfigPath config
-    Cmd.command_ [] cli [ "--config", configPath, "-a", sender, "send", "-m", content, recipient ]
+    let fullCommand = cli <> " --config " <> configPath <> " -a " <> sender <> " send -m " <> content <> " " <> recipient
+    exitCode <- Cmd.cmd fullCommand 
+    return ()

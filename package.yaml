@@ -38,7 +38,7 @@ library:
     - servant-server
     - text
     - warp
-    - command
+    - process
 
 executables:
   pms:
