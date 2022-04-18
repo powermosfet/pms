@@ -38,4 +38,4 @@ sendSignalMsg config memo = do
     let sender = show $ T.unpack $ Config.signalSender config
     let content = show $ T.unpack $ Memo.content memo
     let recipient = show $ T.unpack $ Config.signalRecipient config
-    Cmd.command_ [] cli [ "-a", sender, "send", "-m", content, recipient ]
+    Cmd.command_ [] cli [ "-u", sender, "send", "-m", content, recipient ]
