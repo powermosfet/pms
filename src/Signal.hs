@@ -40,5 +40,5 @@ sendSignalMsg config memo = do
     let recipient = show $ T.unpack $ Config.signalRecipient config
     let configPath = T.unpack $ Config.signalConfigPath config
     let fullCommand = cli <> " --config " <> configPath <> " -a " <> sender <> " send -m " <> content <> " " <> recipient
-    exitCode <- Cmd.cmd fullCommand 
+    exitCode <- Cmd.system fullCommand 
     return ()
