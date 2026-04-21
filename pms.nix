@@ -1,5 +1,5 @@
 { mkDerivation, aeson, base, bytestring, hpack, http-client
-, http-conduit, lib, process, protolude, servant, servant-server
+, http-conduit, lib, protolude, servant, servant-server
 , text, warp
 }:
 mkDerivation {
@@ -9,7 +9,7 @@ mkDerivation {
   isLibrary = true;
   isExecutable = true;
   libraryHaskellDepends = [
-    aeson base bytestring http-client http-conduit process protolude
+    aeson base bytestring http-client http-conduit protolude
     servant servant-server text warp
   ];
   libraryToolDepends = [ hpack ];

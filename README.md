@@ -1,7 +1,13 @@
 # PMS
 Personal Memo Sender
 
-A webservice that sends email to a predefined address
+A webservice that publishes a memo to an ntfy topic.
+
+## Configuration
+
+- `APP_PORT` (required)
+- `NTFY_TOPIC` (required)
+- `NTFY_HOST` (optional, defaults to `https://ntfy.sh`)
 
 ## Nix
 

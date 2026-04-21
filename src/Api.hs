@@ -9,11 +9,12 @@ module Api
 
 import Config (Config(..))
 import Data.Aeson (ToJSON, (.=), object, toJSON)
-import Signal (sendSignalMsg)
 import Memo (Memo(..))
-import Protolude (Eq, Show, Text, ($), liftIO, return)
+import Ntfy (sendNtfyMsg)
+import Protolude hiding (Handler)
 import Servant ((:>), JSON, Post, Proxy(..), ReqBody)
 import Servant.Server (Handler)
+import qualified Control.Exception as E
 
 data MemoResult
     = Success
@@ -31,8 +32,10 @@ server = postMemo
 
 postMemo :: Config -> Memo -> Handler MemoResult
 postMemo config memo = do
-    liftIO $ sendSignalMsg config memo
-    return Success
+    res <- liftIO (E.try (sendNtfyMsg config memo) :: IO (Either E.SomeException ()))
+    case res of
+        Left _ -> return Failure
+        Right _ -> return Success
 
 api :: Proxy PmsApi
 api = Proxy

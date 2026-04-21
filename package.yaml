@@ -32,13 +32,11 @@ library:
     - aeson
     - bytestring
     - http-conduit
-    - http-client
     - protolude
     - servant
     - servant-server
     - text
     - warp
-    - process
 
 executables:
   pms:

@@ -11,20 +11,19 @@ import qualified Data.Text as T
 data Config =
     Config
         { port :: Int
-        , signalCli :: Text
-        , signalSender :: Text
-        , signalRecipient :: Text
-        , signalLogRecipient :: Text
-        , signalConfigPath :: Text
+        , ntfyHost :: Text
+        , ntfyTopic :: Text
         }
     deriving (Show)
 
 fromEnvironment :: [([Char], [Char])] -> Either [Char] Config
 fromEnvironment env =
     let find key = maybeToEither ("Could not find env. var. " <> key) (lookup key env)
+        findOptional key = lookup key env
+        normalizeNtfyHost host =
+            if "http://" `T.isPrefixOf` host || "https://" `T.isPrefixOf` host
+                then host
+                else "https://" <> host
      in Config <$> (find "APP_PORT" >>= readEither) <*>
-        (T.pack <$> find "SIGNAL_CLI") <*>
-        (T.pack <$> find "SIGNAL_SENDER") <*>
-        (T.pack <$> find "SIGNAL_RECIPIENT") <*>
-        (T.pack <$> find "SIGNAL_LOG_RECIPIENT") <*>
-        (T.pack <$> find "SIGNAL_CONFIG_PATH")
+        pure (normalizeNtfyHost (T.pack (fromMaybe "https://ntfy.sh" (findOptional "NTFY_HOST")))) <*>
+        (T.pack <$> find "NTFY_TOPIC")
